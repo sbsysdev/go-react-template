@@ -1,0 +1,30 @@
+{
+  "name": "Go & React template",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+  "forwardPorts": [8080, 5050, 5173, 4173],
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {}
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "mhutchie.git-graph",
+        "eamodio.gitlens",
+        "redhat.vscode-yaml",
+        "redhat.vscode-xml",
+        "esbenp.prettier-vscode",
+        "dbaeumer.vscode-eslint",
+        "golang.Go",
+        "humao.rest-client",
+        "inferrinizzard.prettier-sql-vscode",
+        "jock.svg"
+      ]
+    }
+  },
+  "mounts": [
+    "source=${localEnv:HOME}/.ssh,target=/home/vscode/.ssh,readonly,type=bind"
+  ],
+  "postCreateCommand": "sudo chown -R $(whoami) $(go env GOPATH)"
+}
