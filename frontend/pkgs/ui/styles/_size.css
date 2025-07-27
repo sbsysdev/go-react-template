@@ -1,0 +1,44 @@
+:root {
+  /* border */
+  --border-xs: 1px;
+  --border-sm: 1.5px;
+  --border-md: 2px;
+  --border-lg: 3px;
+  --border-xl: 4px;
+  /* space */
+  --space-xs: 0.125rem;
+  --space-sm: 0.25rem;
+  --space-md: 0.375rem;
+  --space-lg: 0.5rem;
+  --space-xl: 0.625rem;
+  --space-2xl: 0.75rem;
+  --space-3xl: 0.875rem;
+  --space-4xl: 1rem;
+  /* wide */
+  --wide-xs: 0.5rem;
+  --wide-sm: 1rem;
+  --wide-md: 1.5rem;
+  --wide-lg: 2rem;
+  --wide-xl: 3rem;
+  --wide-2xl: 4rem;
+  --wide-3xl: 5rem;
+  --wide-4xl: 6rem;
+  /* element */
+  --element-xs: 8rem;
+  --element-sm: 10rem;
+  --element-md: 12rem;
+  --element-lg: 14rem;
+  --element-xl: 18rem;
+  --element-2xl: 22rem;
+  --element-3xl: 26rem;
+  --element-4xl: 30rem;
+  /* screen */
+  --screen-xs: 40rem;
+  --screen-sm: 44rem;
+  --screen-md: 48rem;
+  --screen-lg: 56rem;
+  --screen-xl: 64rem;
+  --screen-2xl: 72rem;
+  --screen-3xl: 80rem;
+  --screen-4xl: 88rem;
+}

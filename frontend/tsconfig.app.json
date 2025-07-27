@@ -21,7 +21,16 @@
     "noUnusedParameters": true,
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+
+    /* Path */
+    "baseUrl": ".",
+    "paths": {
+      /* src */
+      "@/*": ["src/*"],
+      /* packages */
+      "@ui/*": ["pkgs/ui/*"]
+    }
   },
   "include": ["src"]
 }

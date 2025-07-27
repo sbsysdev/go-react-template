@@ -1,0 +1,32 @@
+.dots {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.disabled {
+  pointer-events: none;
+  user-select: none;
+}
+
+.enabled {
+  pointer-events: all;
+  user-select: all;
+}
+
+.inset {
+  position: absolute;
+
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+}
+
+.grid {
+  --grid-size: auto;
+  --grid-sizing: auto-fit;
+
+  display: grid;
+  grid-template-columns: repeat(var(--grid-sizing), minmax(min(100%, var(--grid-size), 1fr)));
+}

@@ -1,0 +1,31 @@
+:root {
+  /* size */
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-md: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 2rem;
+  --font-size-4xl: 2.5rem;
+  /* line */
+  --line-height-xs: 1;
+  --line-height-sm: 1.2;
+  --line-height-md: 1.25;
+  --line-height-lg: 1.3;
+  --line-height-xl: 1.4;
+  --line-height-2xl: 1.5;
+  --line-height-3xl: 1.75;
+  --line-height-4xl: 2;
+  /* weight */
+  --font-weight-xs: lighter;
+  --font-weight-sm: 300;
+  --font-weight-md: 400;
+  --font-weight-lg: 500;
+  --font-weight-xl: 700;
+  --font-weight-2xl: bolder;
+  /* family */
+  --font-family-brand: 'Grape Nuts', serif;
+  --font-family-main: 'Montserrat', sans-serif;
+  --font-family-number: 'Roboto Mono', monospace;
+}
