@@ -19,7 +19,8 @@
         "golang.Go",
         "humao.rest-client",
         "inferrinizzard.prettier-sql-vscode",
-        "jock.svg"
+        "jock.svg",
+        "clinyong.vscode-css-modules"
       ]
     }
   },

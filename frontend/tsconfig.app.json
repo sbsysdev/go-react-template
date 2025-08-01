@@ -29,8 +29,9 @@
       /* src */
       "@/*": ["src/*"],
       /* packages */
-      "@ui/*": ["pkgs/ui/*"]
+      "@ui/*": ["pkgs/ui/*"],
+      "@utilities/*": ["pkgs/utilities/*"]
     }
   },
-  "include": ["src"]
+  "include": ["src", "pkgs"]
 }

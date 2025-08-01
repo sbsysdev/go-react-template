@@ -1,0 +1,52 @@
+/* 
+scheme = 'light' | 'dark'
+
+variant = 'bg' | 'surface' | 'text' | 'fill' | 'subtle' | 'outline' | 'ghost' | 'shadow';
+
+priority = 'neutral' | 'primary' | 'secondary' | 'tertiary' | 'accent' | 'info' | 'success' | 'warning' | 'danger'
+
+state = 'default' | 'hover' | 'pressed' | 'focus' | 'disabled' | 'active' | 'loading' | 'success' | 'error'
+
+.theme-<scheme> {
+  --<variant>-<priority>-<state>: oklch(l c h);
+}
+ */
+
+.theme-light {
+  --bg-neutral: oklch(94% 0 0);
+
+  --surface-neutral: oklch(98% 0 0);
+
+  --text-neutral: oklch(24% 0 0);
+  --text-neutral-disabled: oklch(48% 0 0);
+
+  --text-inverse-neutral: oklch(96% 0 0);
+  --text-inverse-neutral-disabled: oklch(72% 0 0);
+
+  --fill-neutral: oklch(48% 0 0);
+  --fill-neutral-hover: oklch(44% 0 0);
+  --fill-neutral-pressed: oklch(40% 0 0);
+
+  --subtle-neutral: oklch(90% 0 0);
+  --subtle-neutral-hover: oklch(86% 0 0);
+  --subtle-neutral-pressed: oklch(82% 0 0);
+}
+.theme-dark {
+  --bg-neutral: oklch(20% 0 0);
+
+  --surface-neutral: oklch(24% 0 0);
+
+  --text-neutral: oklch(98% 0 0);
+  --text-neutral-disabled: oklch(74% 0 0);
+
+  --text-inverse-neutral: oklch(22% 0 0);
+  --text-inverse-neutral-disabled: oklch(46% 0 0);
+
+  --fill-neutral: oklch(82% 0 0);
+  --fill-neutral-hover: oklch(86% 0 0);
+  --fill-neutral-pressed: oklch(90% 0 0);
+
+  --subtle-neutral: oklch(28% 0 0);
+  --subtle-neutral-hover: oklch(32% 0 0);
+  --subtle-neutral-pressed: oklch(36% 0 0);
+}

@@ -25,6 +25,7 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url)),
       /* pkgs */
       '@ui': fileURLToPath(new URL('./pkgs/ui', import.meta.url)),
+      '@utilities': fileURLToPath(new URL('./pkgs/utilities', import.meta.url)),
     },
   },
 });

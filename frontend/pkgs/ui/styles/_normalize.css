@@ -18,7 +18,52 @@
   }
 
   & {
-    scrollbar-color: var(--theme-primary) var(--theme-base);
+    scrollbar-color: var(--fill-neutral) var(--bg-neutral);
     scrollbar-width: thin;
   }
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+}
+#root {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  overflow: hidden;
+}
+#drop-down,
+#tooltip,
+#modal,
+#notification {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  pointer-events: none;
+  position: absolute;
+  user-select: none;
+
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+
+  & > * {
+    pointer-events: all;
+    user-select: all;
+  }
+}
+#drop-down {
+  z-index: 10;
+}
+#tooltip {
+  z-index: 20;
+}
+#modal {
+  z-index: 30;
+}
+#notification {
+  z-index: 40;
 }
