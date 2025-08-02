@@ -7,4 +7,5 @@ export interface IconProps extends SVGProps<SVGSVGElement> {
   path: string;
   size?: ThemeSizeLarge;
   disabled?: boolean;
+  inverse?: boolean;
 }

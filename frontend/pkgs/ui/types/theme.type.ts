@@ -4,6 +4,8 @@ import type { Slot } from './slot.type';
 export type ThemeScheme = 'light' | 'dark';
 export type ThemePreference = 'system' | 'inverse' | ThemeScheme;
 
+export type ThemeVariant = 'fill' | 'subtle';
+
 export interface ThemeSchemeValue {
   preference: ThemePreference;
   scheme: ThemeScheme;

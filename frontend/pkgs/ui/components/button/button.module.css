@@ -1,0 +1,92 @@
+.button {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  transition: all 250ms ease-in-out;
+
+  &:disabled {
+    cursor: default;
+  }
+}
+
+.padding-xs {
+  padding: var(--space-xs);
+}
+.padding-sm {
+  padding: var(--space-sm);
+}
+.padding-md {
+  padding: var(--space-md);
+}
+.padding-lg {
+  padding: var(--space-lg);
+}
+.padding-xl {
+  padding: var(--space-xl);
+}
+.padding-2xl {
+  padding: var(--space-2xl);
+}
+.padding-3xl {
+  padding: var(--space-3xl);
+}
+.padding-4xl {
+  padding: var(--space-4xl);
+}
+
+.variant-fill {
+  background-color: var(--fill-neutral);
+
+  &:hover {
+    background-color: var(--fill-neutral-hover);
+  }
+  &:active {
+    background-color: var(--fill-neutral-pressed);
+  }
+  &:disabled {
+    background-color: var(--fill-neutral-disabled);
+  }
+}
+.variant-subtle {
+  background-color: var(--subtle-neutral);
+
+  &:hover {
+    background-color: var(--subtle-neutral-hover);
+  }
+  &:active {
+    background-color: var(--subtle-neutral-pressed);
+  }
+  &:disabled {
+    background-color: var(--subtle-neutral-disabled);
+  }
+}
+
+.rounded-xs {
+  border-radius: var(--wide-xs);
+}
+.rounded-sm {
+  border-radius: var(--wide-sm);
+}
+.rounded-md {
+  border-radius: var(--wide-md);
+}
+.rounded-lg {
+  border-radius: var(--wide-lg);
+}
+.rounded-xl {
+  border-radius: var(--wide-xl);
+}
+.rounded-2xl {
+  border-radius: var(--wide-2xl);
+}
+.rounded-3xl {
+  border-radius: var(--wide-3xl);
+}
+.rounded-4xl {
+  border-radius: var(--wide-4xl);
+}
+.rounded-full {
+  border-radius: 100%;
+}

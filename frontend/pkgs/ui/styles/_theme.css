@@ -26,10 +26,12 @@ state = 'default' | 'hover' | 'pressed' | 'focus' | 'disabled' | 'active' | 'loa
   --fill-neutral: oklch(48% 0 0);
   --fill-neutral-hover: oklch(44% 0 0);
   --fill-neutral-pressed: oklch(40% 0 0);
+  --fill-neutral-disabled: oklch(36% 0 0);
 
   --subtle-neutral: oklch(90% 0 0);
   --subtle-neutral-hover: oklch(86% 0 0);
   --subtle-neutral-pressed: oklch(82% 0 0);
+  --subtle-neutral-disabled: oklch(78% 0 0);
 }
 .theme-dark {
   --bg-neutral: oklch(20% 0 0);
@@ -45,8 +47,10 @@ state = 'default' | 'hover' | 'pressed' | 'focus' | 'disabled' | 'active' | 'loa
   --fill-neutral: oklch(82% 0 0);
   --fill-neutral-hover: oklch(86% 0 0);
   --fill-neutral-pressed: oklch(90% 0 0);
+  --fill-neutral-disabled: oklch(94% 0 0);
 
   --subtle-neutral: oklch(28% 0 0);
   --subtle-neutral-hover: oklch(32% 0 0);
   --subtle-neutral-pressed: oklch(36% 0 0);
+  --subtle-neutral-disabled: oklch(40% 0 0);
 }

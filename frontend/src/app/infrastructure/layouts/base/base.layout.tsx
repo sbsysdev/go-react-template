@@ -1,9 +1,7 @@
 /* react */
 import { useState } from 'react';
 /* components */
-import { Icon } from '@ui/components/icon';
-/* assets */
-import { mdiMenu } from '@mdi/js';
+import Header from '../../components/header/header';
 /* styles */
 import styles from './base.module.css';
 
@@ -15,11 +13,7 @@ export default function BaseLayout() {
       {showSidebar ? <aside className={styles.sidebar}></aside> : <></>}
 
       <div className={styles.container}>
-        <header>
-          <button type="button" onClick={() => setShowSidebar(current => !current)}>
-            <Icon path={mdiMenu} size="xl" />
-          </button>
-        </header>
+        <Header toggleSidebar={() => setShowSidebar(current => !current)} />
 
         <div className={styles.content}>CONTENT</div>
 

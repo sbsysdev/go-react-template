@@ -1,0 +1,6 @@
+.header {
+  background-color: var(--surface-neutral);
+  display: flex;
+  flex-direction: row;
+  padding: var(--wide-sm);
+}
