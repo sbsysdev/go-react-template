@@ -1,7 +1,8 @@
 /* react */
 import { useState } from 'react';
 /* components */
-import Header from '../../components/header/header';
+import { Header } from '../../components/header';
+import { Sidebar } from '../../components/sidebar';
 /* styles */
 import styles from './base.module.css';
 
@@ -10,7 +11,7 @@ export default function BaseLayout() {
 
   return (
     <div className={styles.base}>
-      {showSidebar ? <aside className={styles.sidebar}></aside> : <></>}
+      {showSidebar ? <Sidebar className={styles.sidebar} /> : <></>}
 
       <div className={styles.container}>
         <Header toggleSidebar={() => setShowSidebar(current => !current)} />
