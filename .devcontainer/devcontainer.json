@@ -20,7 +20,8 @@
         "humao.rest-client",
         "inferrinizzard.prettier-sql-vscode",
         "jock.svg",
-        "clinyong.vscode-css-modules"
+        "clinyong.vscode-css-modules",
+        "lukas-tr.materialdesignicons-intellisense"
       ]
     }
   },

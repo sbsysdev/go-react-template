@@ -1,0 +1,27 @@
+@import '@ui/styles';
+
+.base {
+  background-color: var(--bg-neutral);
+  color: var(--text-neutral);
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+}
+.sidebar {
+  flex-basis: var(--wide-2xl);
+
+  @media (--screen-xl) {
+    flex-basis: var(--element-xl);
+  }
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  gap: var(--wide-md);
+}
+.content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}

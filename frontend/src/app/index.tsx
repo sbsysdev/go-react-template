@@ -5,13 +5,17 @@ import { ThemeSchemeLayout } from '@ui/layouts/theme';
 import { useLocalStorage } from '@utilities/hooks';
 /* types */
 import type { ThemePreference } from '@ui/types';
+/* layouts */
+import { BaseLayout } from './infrastructure/layouts/base';
 
 export default function App() {
   const [preference, updatePreference] = useLocalStorage<ThemePreference>('preference', 'system');
 
   return (
     <ThemeSchemeProvider preference={preference} updatePreference={updatePreference}>
-      <ThemeSchemeLayout>App</ThemeSchemeLayout>
+      <ThemeSchemeLayout>
+        <BaseLayout />
+      </ThemeSchemeLayout>
     </ThemeSchemeProvider>
   );
 }
