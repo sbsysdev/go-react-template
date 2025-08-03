@@ -6,6 +6,7 @@
   display: flex;
   flex-direction: row;
   flex-grow: 1;
+  overflow: hidden;
 }
 .sidebar {
   flex-basis: var(--wide-2xl);
@@ -18,7 +19,12 @@
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  gap: var(--wide-md);
+}
+.scroll {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  overflow: auto;
 }
 .content {
   display: flex;

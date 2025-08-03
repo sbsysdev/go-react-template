@@ -39,17 +39,17 @@ export default function Sidebar({ className, ...props }: SidebarProps) {
     <aside className={classNames(styles.sidebar, className)} {...props}>
       <section className={styles['brand-short']}>
         <Label family="brand" size="2xl" weight="2xl">
-          MA
+          AN
         </Label>
       </section>
 
       <section className={styles['brand-large']}>
         <Label className={styles['brand-label']} family="brand" size="xl" weight="xl" dots>
-          Medical
+          App
         </Label>
 
         <Label className={styles['brand-label']} family="brand" size="xl" weight="xl" dots>
-          Appointments
+          Name
         </Label>
       </section>
 
