@@ -10,13 +10,13 @@
   --font-size-4xl: 2.5rem;
   /* line */
   --line-height-xs: 1;
-  --line-height-sm: 1.2;
-  --line-height-md: 1.25;
-  --line-height-lg: 1.3;
-  --line-height-xl: 1.4;
-  --line-height-2xl: 1.5;
-  --line-height-3xl: 1.75;
-  --line-height-4xl: 2;
+  --line-height-sm: 1.25;
+  --line-height-md: 1.5;
+  --line-height-lg: 1.75;
+  --line-height-xl: 2;
+  --line-height-2xl: 2.25;
+  --line-height-3xl: 2.5;
+  --line-height-4xl: 2.75;
   /* weight */
   --font-weight-xs: lighter;
   --font-weight-sm: 300;

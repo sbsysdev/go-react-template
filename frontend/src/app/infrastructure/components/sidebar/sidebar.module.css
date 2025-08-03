@@ -1,8 +1,37 @@
 .sidebar {
   background-color: var(--surface-neutral);
-  container-name: sidebar;
-  container-type: inline-size;
+  container: sidebar / inline-size;
   display: flex;
   flex-direction: column;
   gap: var(--wide-md);
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+.brand-short,
+.brand-large {
+  background-color: var(--subtle-neutral);
+  flex-direction: column;
+  text-align: center;
+}
+.brand-short {
+  display: flex;
+  padding: var(--space-3xl) var(--space-md);
+
+  @container sidebar (width > 12rem) {
+    display: none;
+  }
+}
+.brand-large {
+  aspect-ratio: 1;
+  border-radius: 100%;
+  display: none;
+  gap: var(--space-xs);
+  justify-content: center;
+  margin: var(--wide-xs) var(--wide-xl);
+  padding: var(--space-xl);
+
+  @container sidebar (width > 12rem) {
+    display: flex;
+  }
 }

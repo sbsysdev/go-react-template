@@ -10,9 +10,23 @@ import styles from './sidebar.module.css';
 export default function Sidebar({ className, ...props }: SidebarProps) {
   return (
     <aside className={classNames(styles.sidebar, className)} {...props}>
-      <h1>
-        <Label>Clinic</Label>
-      </h1>
+      <section className={styles['brand-short']}>
+        <Label family="brand" size="2xl" weight="2xl">
+          MA
+        </Label>
+      </section>
+
+      <section className={styles['brand-large']}>
+        <Label family="brand" size="xl" weight="xl">
+          Medical
+        </Label>
+
+        <Label family="brand" size="xl" weight="xl">
+          Appointments
+        </Label>
+      </section>
+
+      <section>Theming</section>
     </aside>
   );
 }
