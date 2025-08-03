@@ -10,28 +10,50 @@
 
 .brand-short,
 .brand-large {
+  aspect-ratio: 1;
   background-color: var(--subtle-neutral);
+  border-radius: 50%;
   flex-direction: column;
+  justify-content: center;
   text-align: center;
 }
 .brand-short {
   display: flex;
-  padding: var(--space-3xl) var(--space-md);
+  margin: var(--wide-xs);
+  padding: var(--space-xs);
 
   @container sidebar (width > 12rem) {
     display: none;
   }
 }
 .brand-large {
-  aspect-ratio: 1;
-  border-radius: 100%;
   display: none;
   gap: var(--space-xs);
-  justify-content: center;
   margin: var(--wide-xs) var(--wide-xl);
   padding: var(--space-xl);
 
   @container sidebar (width > 12rem) {
     display: flex;
+  }
+}
+
+.theming {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  padding: var(--space-2xl);
+
+  .theming-action {
+    gap: var(--wide-md);
+  }
+
+  .theming-label {
+    display: none;
+    flex-grow: 1;
+    text-align: start;
+
+    @container sidebar (width > 12rem) {
+      display: inline;
+    }
   }
 }

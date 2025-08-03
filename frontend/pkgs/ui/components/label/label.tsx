@@ -13,18 +13,23 @@ export default function Label({
   weight = 'md',
   family = 'main',
   dots,
+  inverse,
+  disabled,
   ...props
 }: LabelProps) {
   return (
     <span
       className={classNames(
+        styles.label,
         styles[`size-${size}`],
         styles[`line-${line}`],
         styles[`weight-${weight}`],
         styles[`family-${family}`],
         dots && 'dots',
+        inverse && styles.inverse,
         className
       )}
+      aria-disabled={disabled}
       {...props}>
       {content(children)}
     </span>

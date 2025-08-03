@@ -1,3 +1,19 @@
+.label {
+  color: var(--text-neutral);
+
+  &[aria-disabled] {
+    color: var(--text-neutral-disabled);
+  }
+
+  &.inverse {
+    color: var(--text-inverse-neutral);
+
+    &[aria-disabled] {
+      color: var(--text-inverse-neutral-disabled);
+    }
+  }
+}
+
 .size-xs {
   font-size: var(--font-size-xs);
 }

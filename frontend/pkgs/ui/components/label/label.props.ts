@@ -11,4 +11,6 @@ export interface LabelProps
   weight?: ThemeFontWeight;
   family?: ThemeFontFamily;
   dots?: boolean;
+  inverse?: boolean;
+  disabled?: boolean;
 }
