@@ -1,6 +1,28 @@
 import type { Slot } from './slot.type';
 
-export type CellSlot<T, K> = (row: T, value: K, counter: number) => Slot;
+export type SortBy = 'ASC' | 'DESC';
+
+export interface CellSlotMetadata<T> {
+  index: number;
+  pageIndex: number;
+  currentPage: number;
+  perPage: number;
+  sortKey: T[keyof T];
+  isSorted: boolean;
+  sortBy: SortBy;
+  search: string;
+  sortable: boolean;
+  searchable: boolean;
+  hidable: boolean;
+}
+
+export interface CellSlotParams<T, K> {
+  row: T;
+  value: K;
+  metadata: CellSlotMetadata<T>;
+}
+
+export type CellSlot<T, K> = (params: CellSlotParams<T, K>) => Slot;
 
 export type Column<T> = {
   [K in keyof T]: {
@@ -13,20 +35,13 @@ export type Column<T> = {
   };
 }[keyof T];
 
-export type DataTable<T> = {
-  rows?: T[];
-  columns?: Column<T>[];
-};
-
-export type SortBy = 'ASC' | 'DESC';
-export type RowCounter = 'page' | 'global';
-
-export type DataTableProps<T> = {
-  perPage?: number;
-  currentPage?: number;
+export interface DataTableParams<T> {
   search?: string;
+
   sortKey?: keyof T | null;
   sortBy?: SortBy;
-  rowCounter?: RowCounter;
-  hidden?: (keyof T)[];
-};
+
+  paginate?: boolean;
+  currentPage?: number;
+  perPage?: number;
+}
