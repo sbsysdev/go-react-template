@@ -21,7 +21,12 @@
         "inferrinizzard.prettier-sql-vscode",
         "jock.svg",
         "clinyong.vscode-css-modules",
-        "lukas-tr.materialdesignicons-intellisense"
+        "lukas-tr.materialdesignicons-intellisense",
+        "streetsidesoftware.code-spell-checker",
+        "christian-kohler.npm-intellisense",
+        "christian-kohler.path-intellisense",
+        "streetsidesoftware.code-spell-checker-spanish",
+        "Gruntfuggly.todo-tree"
       ]
     }
   },
