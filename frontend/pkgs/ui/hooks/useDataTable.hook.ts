@@ -10,10 +10,10 @@ import type {
   HeaderDataCellSlot,
   SortBy,
 } from '@ui/types';
-/* utils */
-import { filterItemsBySearchableColumns } from './filter.util';
 /* utilities */
 import { subtractSets } from '@utilities/functions';
+/* utils */
+import { filterListBySearchableColumns } from '@ui/utils';
 
 export function useDataTable<T, K extends string | number | symbol = keyof T>() {
   /* raw data */
@@ -30,18 +30,18 @@ export function useDataTable<T, K extends string | number | symbol = keyof T>() 
     [hiddenColumnsSet, searchableColumnsSet]
   );
 
-  const updateColumns = useCallback((newColumns: Column<T, K>[]) => {
-    if (!newColumns.length) {
+  const updateColumns = useCallback((columns: Column<T, K>[]) => {
+    if (!columns.length) {
       return;
     }
     const newColumnsMap = new Map<K, Column<T, K>>();
     const newSearchableColumnsSet = new Set<K>();
 
-    for (const newColumn of newColumns) {
-      newColumnsMap.set(newColumn.key, newColumn);
+    for (const column of columns) {
+      newColumnsMap.set(column.key, column);
 
-      if (newColumn.searchable) {
-        newSearchableColumnsSet.add(newColumn.key);
+      if (column.searchable) {
+        newSearchableColumnsSet.add(column.key);
       }
     }
 
@@ -50,59 +50,62 @@ export function useDataTable<T, K extends string | number | symbol = keyof T>() 
 
     setHiddenColumnsSet(currentHiddenSet => {
       const newHiddenSet = new Set<K>();
-      for (const newColumn of newColumns) {
-        if (currentHiddenSet.has(newColumn.key) && newColumn.hidable) {
-          newHiddenSet.add(newColumn.key);
+      for (const column of columns) {
+        if (currentHiddenSet.has(column.key) && column.hidable) {
+          newHiddenSet.add(column.key);
         }
       }
       return newHiddenSet;
     });
   }, []);
-  const appendColumns = useCallback((newColumns: Column<T, K>[]) => {
-    if (!newColumns.length) return;
+  const appendColumns = useCallback((columns: Column<T, K>[]) => {
+    if (!columns.length) return;
 
-    setColumnsMap(prevMap => {
-      const updatedMap = new Map(prevMap);
-      for (const col of newColumns) {
-        updatedMap.set(col.key, col);
+    setColumnsMap(currentColumnsMap => {
+      const newColumnsMap = new Map(currentColumnsMap);
+      for (const column of columns) {
+        newColumnsMap.set(column.key, column);
       }
-      return updatedMap;
+      return newColumnsMap;
     });
 
-    setSearchableColumnsSet(prevSet => {
-      const updatedSet = new Set(prevSet);
-      for (const col of newColumns) {
-        if (col.searchable) {
-          updatedSet.add(col.key);
+    setSearchableColumnsSet(currentSearchableColumnsSet => {
+      const newSearchableColumnsSet = new Set(currentSearchableColumnsSet);
+      for (const column of columns) {
+        if (column.searchable) {
+          newSearchableColumnsSet.add(column.key);
         }
       }
-      return updatedSet;
+      return newSearchableColumnsSet;
     });
   }, []);
 
   const hideColumn = useCallback(
-    (newHiddenColumn: K) => {
+    (columnKey: K) => {
       if (
-        !columnsMap.has(newHiddenColumn) ||
-        !columnsMap.get(newHiddenColumn)?.hidable ||
-        hiddenColumnsSet.has(newHiddenColumn)
+        !columnsMap.has(columnKey) ||
+        !columnsMap.get(columnKey)?.hidable ||
+        hiddenColumnsSet.has(columnKey)
       ) {
         return;
       }
       const newHiddenColumnsSet = new Set<K>(hiddenColumnsSet);
-      newHiddenColumnsSet.add(newHiddenColumn);
+      newHiddenColumnsSet.add(columnKey);
       setHiddenColumnsSet(newHiddenColumnsSet);
     },
     [columnsMap, hiddenColumnsSet]
   );
-  function showColumn(hiddenColumn: K) {
-    if (!hiddenColumnsSet.has(hiddenColumn)) {
-      return;
-    }
-    const newHiddenColumnsSet = new Set<K>(hiddenColumnsSet);
-    newHiddenColumnsSet.delete(hiddenColumn);
-    setHiddenColumnsSet(newHiddenColumnsSet);
-  }
+  const showColumn = useCallback(
+    (columnKey: K) => {
+      if (!hiddenColumnsSet.has(columnKey)) {
+        return;
+      }
+      const newHiddenColumnsSet = new Set<K>(hiddenColumnsSet);
+      newHiddenColumnsSet.delete(columnKey);
+      setHiddenColumnsSet(newHiddenColumnsSet);
+    },
+    [hiddenColumnsSet]
+  );
 
   /* search param */
   const [searchParam, setSearchParam] = useState<string>('');
@@ -119,12 +122,12 @@ export function useDataTable<T, K extends string | number | symbol = keyof T>() 
 
   const dataTable = useMemo<DataTable<T, K>>(() => {
     const subtractedSearchableColumnsSet = subtractSets(searchableColumnsSet, hiddenColumnsSet);
-    const shouldFilterItems =
+    const shouldFilterRawData =
       subtractedSearchableColumnsSet.size > 0 && validSearchParam.length > 0;
 
-    const filteredItems = shouldFilterItems
-      ? filterItemsBySearchableColumns({
-          items: rawData,
+    const filteredRawData = shouldFilterRawData
+      ? filterListBySearchableColumns({
+          list: rawData,
           columnsMap,
           searchableColumnsSet: subtractedSearchableColumnsSet,
           searchParam: validSearchParam,
@@ -166,8 +169,8 @@ export function useDataTable<T, K extends string | number | symbol = keyof T>() 
       header.push({ params: headerParams, cell: columnValue.header });
 
       /* filtered item column */
-      for (let rowIndex = 0; rowIndex < filteredItems.length; rowIndex++) {
-        const filteredItem = filteredItems[rowIndex];
+      for (let rowIndex = 0; rowIndex < filteredRawData.length; rowIndex++) {
+        const filteredItem = filteredRawData[rowIndex];
 
         const rowParams: CellSlotParams<T, K> = {
           row: filteredItem,
