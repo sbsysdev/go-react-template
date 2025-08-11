@@ -2,7 +2,9 @@
 import { ThemeSchemeProvider } from '@ui/contexts/theme';
 /* layouts */
 import { ThemeSchemeLayout } from '@ui/layouts/theme';
-import { BaseLayout } from './infrastructure/layouts/base';
+import { BaseLayout } from './infrastructure/layouts';
+/* routes */
+import { RootRoutes } from './infrastructure/routes';
 /* hooks */
 import { useLocalStorage } from '@utilities/hooks';
 /* types */
@@ -14,7 +16,9 @@ export default function App() {
   return (
     <ThemeSchemeProvider preference={preference} updatePreference={updatePreference}>
       <ThemeSchemeLayout>
-        <BaseLayout>{/* routes */}</BaseLayout>
+        <BaseLayout>
+          <RootRoutes />
+        </BaseLayout>
       </ThemeSchemeLayout>
     </ThemeSchemeProvider>
   );

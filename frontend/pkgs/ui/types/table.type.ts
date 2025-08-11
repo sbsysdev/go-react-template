@@ -1,47 +1,81 @@
+/* types */
 import type { Slot } from './slot.type';
 
 export type SortBy = 'ASC' | 'DESC';
 
-export interface CellSlotMetadata<T> {
-  index: number;
-  pageIndex: number;
+/* header */
+export interface HeaderCellSlotMetadata<K extends string | number | symbol> {
   currentPage: number;
   perPage: number;
-  sortKey: T[keyof T];
+
+  sortable: boolean;
+  sortKey?: K;
   isSorted: boolean;
   sortBy: SortBy;
-  search: string;
-  sortable: boolean;
+
   searchable: boolean;
+  searchParam: string;
+
   hidable: boolean;
+
+  headerSpan: number;
+  cellSpan: number;
 }
 
-export interface CellSlotParams<T, K> {
+export interface HeaderCellSlotParams<K extends string | number | symbol> {
+  metadata: HeaderCellSlotMetadata<K>;
+  sort: (sortBy: SortBy) => void;
+  hide: () => void;
+}
+
+export type HeaderCellSlot<K extends string | number | symbol> = (
+  params: HeaderCellSlotParams<K>
+) => Slot;
+
+/* rows */
+export interface CellSlotMetadata<K extends string | number | symbol>
+  extends HeaderCellSlotMetadata<K> {
+  value: string;
+
+  index: number;
+  pageIndex: number;
+}
+
+export interface CellSlotParams<T, K extends string | number | symbol> {
   row: T;
-  value: K;
-  metadata: CellSlotMetadata<T>;
+  metadata: CellSlotMetadata<K>;
 }
 
-export type CellSlot<T, K> = (params: CellSlotParams<T, K>) => Slot;
+export type CellSlot<T, K extends string | number | symbol> = (
+  params: CellSlotParams<T, K>
+) => Slot;
 
-export type Column<T> = {
-  [K in keyof T]: {
-    key: K;
-    header?: Slot | CellSlot<T, T[K]>;
-    cell: CellSlot<T, T[K]>;
-    sortable?: boolean;
-    searchable?: boolean;
-    hidable?: boolean;
-  };
-}[keyof T];
+export interface Column<T, K extends string | number | symbol> {
+  key: K;
 
-export interface DataTableParams<T> {
-  search?: string;
+  header: HeaderCellSlot<K>;
+  headerSpan?: number;
 
-  sortKey?: keyof T | null;
-  sortBy?: SortBy;
+  toString: (row: T) => string;
+  cell: CellSlot<T, K>;
+  cellSpan?: number;
 
-  paginate?: boolean;
-  currentPage?: number;
-  perPage?: number;
+  sortable?: boolean;
+  searchable?: boolean;
+  hidable?: boolean;
+}
+
+export interface HeaderDataCellSlot<K extends string | number | symbol> {
+  params: HeaderCellSlotParams<K>;
+  cell: HeaderCellSlot<K>;
+}
+
+export interface DataCellSlot<T, K extends string | number | symbol> {
+  params: CellSlotParams<T, K>;
+  cell: CellSlot<T, K>;
+}
+
+export interface DataTable<T, K extends string | number | symbol> {
+  header: HeaderDataCellSlot<K>[];
+  rows: DataCellSlot<T, K>[][];
 }
