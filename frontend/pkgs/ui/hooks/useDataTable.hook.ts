@@ -13,7 +13,7 @@ import type {
 /* utilities */
 import { subtractSets } from '@utilities/functions';
 /* utils */
-import { filterListBySearchableColumns } from '@ui/utils';
+import { filterListBySearchableColumns, sortListBySortableColumn } from '@ui/utils';
 
 export function useDataTable<T, K extends string | number | symbol = keyof T>() {
   /* raw data */
@@ -115,6 +115,11 @@ export function useDataTable<T, K extends string | number | symbol = keyof T>() 
   const [sortKey, setSortKey] = useState<K>();
   const [sortBy, setSortBy] = useState<SortBy>('ASC');
 
+  const sort = useCallback((key: K, by: SortBy) => {
+    setSortKey(key);
+    setSortBy(by);
+  }, []);
+
   const validSearchParam = useMemo<string>(
     () => (searchParam.trim().length > 3 ? searchParam.trim() : ''),
     [searchParam]
@@ -133,6 +138,15 @@ export function useDataTable<T, K extends string | number | symbol = keyof T>() 
           searchParam: validSearchParam,
         })
       : rawData;
+
+    const sortedRawData = sortKey
+      ? sortListBySortableColumn({
+          list: filteredRawData,
+          columnsMap,
+          sortKey,
+          sortBy,
+        })
+      : filteredRawData;
 
     const header: HeaderDataCellSlot<K>[] = [];
     const rows: DataCellSlot<T, K>[][] = [];
@@ -169,14 +183,14 @@ export function useDataTable<T, K extends string | number | symbol = keyof T>() 
       header.push({ params: headerParams, cell: columnValue.header });
 
       /* filtered item column */
-      for (let rowIndex = 0; rowIndex < filteredRawData.length; rowIndex++) {
-        const filteredItem = filteredRawData[rowIndex];
+      for (let rowIndex = 0; rowIndex < sortedRawData.length; rowIndex++) {
+        const sortedItem = sortedRawData[rowIndex];
 
         const rowParams: CellSlotParams<T, K> = {
-          row: filteredItem,
+          row: sortedItem,
           metadata: {
             ...headerParams.metadata,
-            value: columnValue.toString(filteredItem),
+            value: columnValue.toString(sortedItem),
             index: 1, // TODO
             pageIndex: rowIndex,
           },
@@ -216,6 +230,8 @@ export function useDataTable<T, K extends string | number | symbol = keyof T>() 
     hasSearchableColumns,
     searchParam,
     setSearchParam,
+
+    sort,
 
     dataTable,
   };

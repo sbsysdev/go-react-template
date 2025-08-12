@@ -7,10 +7,8 @@ import { content } from '@ui/utils';
 import { Label } from '@ui/components/label';
 
 export default function HomePage() {
-  const { updateRawData, updateColumns, dataTable, searchParam, setSearchParam } = useDataTable<
-    AuxData,
-    'number' | keyof AuxData
-  >();
+  const { updateRawData, updateColumns, dataTable, searchParam, setSearchParam, sort } =
+    useDataTable<AuxData, 'number' | keyof AuxData>();
 
   useEffect(() => {
     updateRawData(auxData);
@@ -43,7 +41,9 @@ export default function HomePage() {
         searchable: true,
       },
     ]);
-  }, [updateColumns, updateRawData]);
+
+    sort('person', 'ASC');
+  }, [sort, updateColumns, updateRawData]);
 
   return (
     <PageLayout>
