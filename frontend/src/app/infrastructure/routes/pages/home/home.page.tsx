@@ -7,8 +7,18 @@ import { content } from '@ui/utils';
 import { Label } from '@ui/components/label';
 
 export default function HomePage() {
-  const { updateRawData, updateColumns, dataTable, searchParam, setSearchParam, sort } =
-    useDataTable<AuxData, 'number' | keyof AuxData>();
+  const {
+    updateRawData,
+    updateColumns,
+    dataTable,
+    searchParam,
+    setSearchParam,
+    sortColumn,
+    unsortColumn,
+    setPaginate,
+    setCurrentPage,
+    setPerPage,
+  } = useDataTable<AuxData, 'number' | 'index' | keyof AuxData>();
 
   useEffect(() => {
     updateRawData(auxData);
@@ -17,6 +27,12 @@ export default function HomePage() {
       {
         key: 'number',
         header: () => 'No.',
+        toString: () => '',
+        cell: params => <Label>{params.metadata.dataIndex + 1}</Label>,
+      },
+      {
+        key: 'index',
+        header: () => 'Index',
         toString: () => '',
         cell: params => <Label>{params.metadata.pageIndex + 1}</Label>,
       },
@@ -42,8 +58,20 @@ export default function HomePage() {
       },
     ]);
 
-    sort('person', 'ASC');
-  }, [sort, updateColumns, updateRawData]);
+    sortColumn('person', 'ASC');
+    unsortColumn();
+    setCurrentPage(7);
+    setPerPage(15);
+    setPaginate(true);
+  }, [
+    setCurrentPage,
+    setPaginate,
+    setPerPage,
+    sortColumn,
+    unsortColumn,
+    updateColumns,
+    updateRawData,
+  ]);
 
   return (
     <PageLayout>

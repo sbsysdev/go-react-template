@@ -2,22 +2,21 @@
 import type { Column, SortBy } from '@ui/types';
 
 interface SortListBySortableColumnParams<T, K extends string | number | symbol> {
+  sortKey?: K;
   list: T[];
   columnsMap: Map<K, Column<T, K>>;
-  sortKey: K;
   sortBy: SortBy;
 }
 
 export function sortListBySortableColumn<T, K extends string | number | symbol>({
+  sortKey,
   list,
   columnsMap,
-  sortKey,
   sortBy,
 }: SortListBySortableColumnParams<T, K>): T[] {
-  if (!columnsMap.has(sortKey)) {
+  if (!sortKey || !columnsMap.has(sortKey)) {
     return list;
   }
-
   const column = columnsMap.get(sortKey)!;
 
   return [...list].sort((a, b) => {

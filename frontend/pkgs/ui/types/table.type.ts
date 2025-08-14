@@ -37,7 +37,7 @@ export interface CellSlotMetadata<K extends string | number | symbol>
   extends HeaderCellSlotMetadata<K> {
   value: string;
 
-  index: number;
+  dataIndex: number;
   pageIndex: number;
 }
 

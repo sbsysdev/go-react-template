@@ -14,6 +14,9 @@ export function filterListBySearchableColumns<T, K extends string | number | sym
   searchableColumnsSet,
   searchParam,
 }: FilterListBySearchableColumnsParams<T, K>): T[] {
+  if (!searchableColumnsSet.size || !searchParam) {
+    return list;
+  }
   const filteredList: T[] = [];
 
   const searchParamList = searchParam.split(' ');

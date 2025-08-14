@@ -1,19 +1,16 @@
 /* react */
 import { useCallback, useMemo, useState } from 'react';
 /* types */
-import type {
-  CellSlotParams,
-  Column,
-  DataCellSlot,
-  DataTable,
-  HeaderCellSlotParams,
-  HeaderDataCellSlot,
-  SortBy,
-} from '@ui/types';
+import type { Column, DataTable, SortBy } from '@ui/types';
 /* utilities */
 import { subtractSets } from '@utilities/functions';
 /* utils */
-import { filterListBySearchableColumns, sortListBySortableColumn } from '@ui/utils';
+import {
+  filterListBySearchableColumns,
+  paginateList,
+  serializeListToDataTable,
+  sortListBySortableColumn,
+} from '@ui/utils';
 
 export function useDataTable<T, K extends string | number | symbol = keyof T>() {
   /* raw data */
@@ -115,10 +112,18 @@ export function useDataTable<T, K extends string | number | symbol = keyof T>() 
   const [sortKey, setSortKey] = useState<K>();
   const [sortBy, setSortBy] = useState<SortBy>('ASC');
 
-  const sort = useCallback((key: K, by: SortBy) => {
+  const sortColumn = useCallback((key: K, by: SortBy) => {
     setSortKey(key);
     setSortBy(by);
   }, []);
+  const unsortColumn = useCallback(() => {
+    setSortKey(undefined);
+    setSortBy('ASC');
+  }, []);
+
+  const [paginate, setPaginate] = useState<boolean>(true);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [perPage, setPerPage] = useState<number>(10);
 
   const validSearchParam = useMemo<string>(
     () => (searchParam.trim().length > 3 ? searchParam.trim() : ''),
@@ -127,94 +132,66 @@ export function useDataTable<T, K extends string | number | symbol = keyof T>() 
 
   const dataTable = useMemo<DataTable<T, K>>(() => {
     const subtractedSearchableColumnsSet = subtractSets(searchableColumnsSet, hiddenColumnsSet);
-    const shouldFilterRawData =
-      subtractedSearchableColumnsSet.size > 0 && validSearchParam.length > 0;
 
-    const filteredRawData = shouldFilterRawData
-      ? filterListBySearchableColumns({
-          list: rawData,
-          columnsMap,
-          searchableColumnsSet: subtractedSearchableColumnsSet,
-          searchParam: validSearchParam,
-        })
-      : rawData;
+    const filteredRawData = filterListBySearchableColumns({
+      list: rawData,
+      columnsMap,
+      searchableColumnsSet: subtractedSearchableColumnsSet,
+      searchParam: validSearchParam,
+    });
 
-    const sortedRawData = sortKey
-      ? sortListBySortableColumn({
-          list: filteredRawData,
-          columnsMap,
-          sortKey,
-          sortBy,
-        })
-      : filteredRawData;
+    const sortedRawData = sortListBySortableColumn({
+      sortKey,
+      list: filteredRawData,
+      columnsMap,
+      sortBy,
+    });
 
-    const header: HeaderDataCellSlot<K>[] = [];
-    const rows: DataCellSlot<T, K>[][] = [];
+    const {
+      totalPage,
+      safeCurrentPage,
+      pageStartIndex,
+      paginatedList: paginatedRawData,
+    } = paginateList({
+      paginate,
+      currentPage,
+      perPage,
+      list: sortedRawData,
+    });
 
-    for (const [columnKey, columnValue] of columnsMap) {
-      if (hiddenColumnsSet.has(columnKey)) {
-        continue;
-      }
-      /* header */
-      const headerParams: HeaderCellSlotParams<K> = {
-        metadata: {
-          currentPage: 1, // TODO
-          perPage: 10, // TODO
-
-          sortable: columnValue.sortable ?? false,
-          sortKey,
-          isSorted: sortKey === columnValue.key,
-          sortBy,
-
-          searchable: columnValue.searchable ?? false,
-          searchParam: validSearchParam,
-
-          hidable: columnValue.hidable ?? false,
-
-          headerSpan: columnValue.headerSpan ?? 1,
-          cellSpan: columnValue.cellSpan ?? 1,
-        },
-        sort: sortBy => {
-          setSortKey(columnKey);
-          setSortBy(sortBy);
-        },
-        hide: () => hideColumn(columnKey),
-      };
-      header.push({ params: headerParams, cell: columnValue.header });
-
-      /* filtered item column */
-      for (let rowIndex = 0; rowIndex < sortedRawData.length; rowIndex++) {
-        const sortedItem = sortedRawData[rowIndex];
-
-        const rowParams: CellSlotParams<T, K> = {
-          row: sortedItem,
-          metadata: {
-            ...headerParams.metadata,
-            value: columnValue.toString(sortedItem),
-            index: 1, // TODO
-            pageIndex: rowIndex,
-          },
-        };
-        if (!rows[rowIndex]) {
-          rows[rowIndex] = [];
-        }
-        rows[rowIndex].push({ params: rowParams, cell: columnValue.cell });
-      }
-    }
+    const { header, rows } = serializeListToDataTable({
+      columnsMap,
+      hiddenColumnsSet,
+      currentPage: safeCurrentPage,
+      perPage,
+      sortKey,
+      sortBy,
+      searchParam: validSearchParam,
+      sortColumn,
+      hideColumn,
+      list: paginatedRawData,
+      pageStartIndex,
+    });
 
     return {
       header,
       rows,
+      totalPage,
+      safeCurrentPage,
     };
   }, [
-    hideColumn,
-    columnsMap,
-    hiddenColumnsSet,
-    rawData,
     searchableColumnsSet,
-    sortBy,
-    sortKey,
+    hiddenColumnsSet,
     validSearchParam,
+    rawData,
+    columnsMap,
+    sortKey,
+    sortBy,
+    paginate,
+    currentPage,
+    perPage,
+    sortColumn,
+    hideColumn,
   ]);
 
   return {
@@ -231,7 +208,12 @@ export function useDataTable<T, K extends string | number | symbol = keyof T>() 
     searchParam,
     setSearchParam,
 
-    sort,
+    sortColumn,
+    unsortColumn,
+
+    setPaginate,
+    setCurrentPage,
+    setPerPage,
 
     dataTable,
   };
