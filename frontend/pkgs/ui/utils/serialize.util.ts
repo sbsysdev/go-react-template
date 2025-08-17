@@ -74,7 +74,7 @@ export function serializeListToDataTable<T, K extends string | number | symbol>(
         row: item,
         metadata: {
           ...headerParams.metadata,
-          value: columnValue.toString(item),
+          value: columnValue.toString?.(item) ?? '',
           dataIndex: pageStartIndex + index,
           pageIndex: index,
         },

@@ -56,7 +56,7 @@ export interface Column<T, K extends string | number | symbol> {
   header: HeaderCellSlot<K>;
   headerSpan?: number;
 
-  toString: (row: T) => string;
+  toString?: (row: T) => string;
   cell: CellSlot<T, K>;
   cellSpan?: number;
 

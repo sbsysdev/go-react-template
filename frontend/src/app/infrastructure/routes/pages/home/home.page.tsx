@@ -28,13 +28,11 @@ export default function HomePage() {
       {
         key: 'number',
         header: () => 'No.',
-        toString: () => '',
         cell: params => <Label>{params.metadata.dataIndex + 1}</Label>,
       },
       {
         key: 'index',
         header: () => 'Index',
-        toString: () => '',
         cell: params => <Label>{params.metadata.pageIndex + 1}</Label>,
       },
       {
