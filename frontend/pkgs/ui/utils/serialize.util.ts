@@ -2,9 +2,9 @@
 import type {
   CellSlotParams,
   Column,
-  DataCellSlot,
+  DataHeader,
+  DataRow,
   HeaderCellSlotParams,
-  HeaderDataCellSlot,
   SortBy,
 } from '@ui/types';
 
@@ -35,8 +35,8 @@ export function serializeListToDataTable<T, K extends string | number | symbol>(
   list,
   pageStartIndex,
 }: SerializeListToDataTableParams<T, K>) {
-  const header: HeaderDataCellSlot<K>[] = [];
-  const rows: DataCellSlot<T, K>[][] = [];
+  const header: DataHeader<K> = { cells: [] };
+  const rows: DataRow<T, K>[] = [];
 
   for (const [columnKey, columnValue] of columnsMap) {
     if (hiddenColumnsSet.has(columnKey)) {
@@ -64,7 +64,7 @@ export function serializeListToDataTable<T, K extends string | number | symbol>(
       sort: sortBy => sortColumn(columnKey, sortBy),
       hide: () => hideColumn(columnKey),
     };
-    header.push({ params: headerParams, cell: columnValue.header });
+    header.cells.push({ params: headerParams, cell: columnValue.header });
 
     /* filtered item column */
     for (let index = 0; index < list.length; index++) {
@@ -80,9 +80,9 @@ export function serializeListToDataTable<T, K extends string | number | symbol>(
         },
       };
       if (!rows[index]) {
-        rows[index] = [];
+        rows[index] = { item, cells: [] };
       }
-      rows[index].push({ params: rowParams, cell: columnValue.cell });
+      rows[index].cells.push({ params: rowParams, cell: columnValue.cell });
     }
   }
 

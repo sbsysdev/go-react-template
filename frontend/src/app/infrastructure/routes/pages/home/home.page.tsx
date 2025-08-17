@@ -84,7 +84,7 @@ export default function HomePage() {
       <table style={{ opacity: isStaleSearchParam ? 0.5 : 1 }}>
         <thead>
           <tr>
-            {dataTable.header.map((headerCell, index) => (
+            {dataTable.header.cells.map((headerCell, index) => (
               <th key={index} colSpan={headerCell.params.metadata.cellSpan}>
                 {content(headerCell.cell(headerCell.params))}
               </th>
@@ -94,7 +94,7 @@ export default function HomePage() {
         <tbody>
           {dataTable.rows.map((row, rowIndex) => (
             <tr key={rowIndex}>
-              {row.map((cell, cellIndex) => (
+              {row.cells.map((cell, cellIndex) => (
                 <td key={cellIndex} colSpan={cell.params.metadata.cellSpan}>
                   {content(cell.cell(cell.params))}
                 </td>

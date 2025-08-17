@@ -153,7 +153,7 @@ export function useDataTable<T, K extends string | number | symbol = keyof T>() 
     });
 
     const {
-      totalPage,
+      totalPages,
       safeCurrentPage,
       pageStartIndex,
       paginatedList: paginatedRawData,
@@ -181,8 +181,9 @@ export function useDataTable<T, K extends string | number | symbol = keyof T>() 
     return {
       header,
       rows,
-      totalPage,
+      totalPages,
       safeCurrentPage,
+      totalItems: filteredRawData.length,
     };
   }, [
     searchableColumnsSet,
