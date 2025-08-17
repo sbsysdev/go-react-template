@@ -1,6 +1,7 @@
 .label {
   color: var(--text-neutral);
 
+  &:disabled,
   &[aria-disabled] {
     color: var(--text-neutral-disabled);
   }
@@ -8,6 +9,7 @@
   &.inverse {
     color: var(--text-inverse-neutral);
 
+    &:disabled,
     &[aria-disabled] {
       color: var(--text-inverse-neutral-disabled);
     }

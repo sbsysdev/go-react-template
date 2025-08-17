@@ -1,6 +1,10 @@
 .page {
+  background-color: var(--surface-neutral);
+  border-radius: var(--wide-xs);
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
   gap: var(--wide-md);
+  margin: var(--wide-md);
   padding: var(--wide-md);
 }
