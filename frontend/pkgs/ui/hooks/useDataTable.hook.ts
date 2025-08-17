@@ -1,5 +1,5 @@
 /* react */
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useDeferredValue, useMemo, useState } from 'react';
 /* types */
 import type { Column, DataTable, SortBy } from '@ui/types';
 /* utilities */
@@ -104,11 +104,19 @@ export function useDataTable<T, K extends string | number | symbol = keyof T>() 
     [hiddenColumnsSet]
   );
 
-  /* search param */
+  /* searching */
   const [searchParam, setSearchParam] = useState<string>('');
+  const deferredSearchParam = useDeferredValue(searchParam);
+  const validSearchParam = useMemo<string>(
+    () => (deferredSearchParam.trim().length >= 3 ? deferredSearchParam.trim() : ''),
+    [deferredSearchParam]
+  );
+  const isStaleSearchParam = useMemo<boolean>(
+    () => searchParam !== deferredSearchParam && validSearchParam !== '',
+    [deferredSearchParam, searchParam, validSearchParam]
+  );
 
-  /* misc */
-
+  /* sorting */
   const [sortKey, setSortKey] = useState<K>();
   const [sortBy, setSortBy] = useState<SortBy>('ASC');
 
@@ -121,15 +129,12 @@ export function useDataTable<T, K extends string | number | symbol = keyof T>() 
     setSortBy('ASC');
   }, []);
 
+  /* paginating */
   const [paginate, setPaginate] = useState<boolean>(true);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [perPage, setPerPage] = useState<number>(10);
 
-  const validSearchParam = useMemo<string>(
-    () => (searchParam.trim().length > 3 ? searchParam.trim() : ''),
-    [searchParam]
-  );
-
+  /* data table */
   const dataTable = useMemo<DataTable<T, K>>(() => {
     const subtractedSearchableColumnsSet = subtractSets(searchableColumnsSet, hiddenColumnsSet);
 
@@ -207,6 +212,7 @@ export function useDataTable<T, K extends string | number | symbol = keyof T>() 
     hasSearchableColumns,
     searchParam,
     setSearchParam,
+    isStaleSearchParam,
 
     sortColumn,
     unsortColumn,

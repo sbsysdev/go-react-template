@@ -18,6 +18,7 @@ export default function HomePage() {
     setPaginate,
     setCurrentPage,
     setPerPage,
+    isStaleSearchParam,
   } = useDataTable<AuxData, 'number' | 'index' | keyof AuxData>();
 
   useEffect(() => {
@@ -82,7 +83,7 @@ export default function HomePage() {
         onChange={e => setSearchParam(e.target.value)}
       />
 
-      <table>
+      <table style={{ opacity: isStaleSearchParam ? 0.5 : 1 }}>
         <thead>
           <tr>
             {dataTable.header.map((headerCell, index) => (
