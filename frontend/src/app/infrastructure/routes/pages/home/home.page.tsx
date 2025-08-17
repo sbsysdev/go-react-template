@@ -6,13 +6,14 @@ import { PageLayout } from '@/app/infrastructure/layouts';
 import { Label } from '@ui/components/label';
 import { Field } from '@ui/components/field';
 import { Icon } from '@ui/components/icon';
+import { Button } from '@ui/components/button';
 /* hooks */
 import { useDataTable } from '@ui/hooks';
 /* utils */
 import { content } from '@ui/utils';
 import { auxData, type AuxData } from './home.data';
 /* assets */
-import { mdiMagnify } from '@mdi/js';
+import { mdiArrowLeft, mdiArrowRight, mdiMagnify } from '@mdi/js';
 
 export default function HomePage() {
   const {
@@ -22,11 +23,9 @@ export default function HomePage() {
     searchParam,
     setSearchParam,
     sortColumn,
-    unsortColumn,
-    setPaginate,
-    setCurrentPage,
-    setPerPage,
     isStaleSearchParam,
+    previousPage,
+    nextPage,
   } = useDataTable<AuxData, 'number' | 'index' | keyof AuxData>();
 
   useEffect(() => {
@@ -66,19 +65,7 @@ export default function HomePage() {
     ]);
 
     sortColumn('person', 'ASC');
-    // unsortColumn();
-    setCurrentPage(1);
-    setPerPage(20);
-    setPaginate(true);
-  }, [
-    setCurrentPage,
-    setPaginate,
-    setPerPage,
-    sortColumn,
-    unsortColumn,
-    updateColumns,
-    updateRawData,
-  ]);
+  }, [sortColumn, updateColumns, updateRawData]);
 
   return (
     <PageLayout>
@@ -97,6 +84,26 @@ export default function HomePage() {
           />
         )}
       </Field>
+
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'flex-end',
+          gap: 'var(--wide-md)',
+        }}>
+        <Button disabled={dataTable.safeCurrentPage === 1} onClick={previousPage}>
+          <Icon path={mdiArrowLeft} />
+        </Button>
+
+        <Label>
+          Page {dataTable.safeCurrentPage} of {dataTable.totalPages}
+        </Label>
+
+        <Button disabled={dataTable.safeCurrentPage === dataTable.totalPages} onClick={nextPage}>
+          <Icon path={mdiArrowRight} />
+        </Button>
+      </div>
 
       <table style={{ opacity: isStaleSearchParam ? 0.5 : 1 }}>
         <thead style={{ textAlign: 'left' }}>

@@ -200,6 +200,17 @@ export function useDataTable<T, K extends string | number | symbol = keyof T>() 
     hideColumn,
   ]);
 
+  const previousPage = useCallback(() => {
+    if (dataTable.safeCurrentPage > 1) {
+      setCurrentPage(dataTable.safeCurrentPage - 1);
+    }
+  }, [dataTable.safeCurrentPage]);
+  const nextPage = useCallback(() => {
+    if (dataTable.safeCurrentPage < dataTable.totalPages) {
+      setCurrentPage(dataTable.safeCurrentPage + 1);
+    }
+  }, [dataTable.safeCurrentPage, dataTable.totalPages]);
+
   return {
     rawData,
     updateRawData,
@@ -223,5 +234,8 @@ export function useDataTable<T, K extends string | number | symbol = keyof T>() 
     setPerPage,
 
     dataTable,
+
+    previousPage,
+    nextPage,
   };
 }
