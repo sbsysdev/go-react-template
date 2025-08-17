@@ -23,13 +23,13 @@ state = 'default' | 'hover' | 'pressed' | 'focus' | 'disabled' | 'active' | 'loa
   --text-inverse-neutral: oklch(96% 0 0);
   --text-inverse-neutral-disabled: oklch(72% 0 0);
 
-  --fill-neutral: oklch(48% 0 0);
-  --fill-neutral-hover: oklch(44% 0 0);
+  --fill-neutral: oklch(44% 0 0);
+  --fill-neutral-hover: oklch(48% 0 0);
   --fill-neutral-pressed: oklch(40% 0 0);
   --fill-neutral-disabled: oklch(36% 0 0);
 
-  --subtle-neutral: oklch(90% 0 0);
-  --subtle-neutral-hover: oklch(86% 0 0);
+  --subtle-neutral: oklch(86% 0 0);
+  --subtle-neutral-hover: oklch(90% 0 0);
   --subtle-neutral-pressed: oklch(82% 0 0);
   --subtle-neutral-disabled: oklch(78% 0 0);
 }
